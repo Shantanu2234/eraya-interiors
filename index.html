@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eraya Interiors — Interior Design Studio, Pune</title>
+<meta name="description" content="Eraya Interiors is a residential interior design studio in Pune. Full-service design from first sketch to the last cushion.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET / BASE ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:auto;}
+:root{
+  --cream:#F2ECE1;
+  --cream-dim:#E6DDCB;
+  --ink:#1E1A15;
+  --ink-soft:#2A241C;
+  --rust:#A63D26;
+  --rust-deep:#6F2818;
+  --magenta:#7D1F44;
+  --magenta-deep:#511530;
+  --royal:#1B3358;
+  --royal-deep:#0F2036;
+  --olive:#565A34;
+  --olive-deep:#383B21;
+  --gold:#C6A15B;
+  --serif:'Fraunces',serif;
+  --sans:'Space Grotesk',sans-serif;
+}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.5;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.02;letter-spacing:-0.01em;}
+.eyebrow{display:none;} /* deliberately unused */
+::selection{background:var(--gold);color:var(--ink);}
+
+/* thin scrollbar, subtle */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:var(--ink);border-radius:6px;}
+
+/* ============ GRAIN OVERLAY ============ */
+.grain{
+  position:fixed;inset:0;pointer-events:none;z-index:9990;
+  opacity:0.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============ CURSOR ============ */
+.cursor{
+  position:fixed;top:0;left:0;width:14px;height:14px;border-radius:50%;
+  background:var(--gold);pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);mix-blend-mode:difference;
+  transition:width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1),background .35s;
+}
+.cursor.big{width:76px;height:76px;background:var(--cream);display:flex;align-items:center;justify-content:center;}
+.cursor.big::after{
+  content:attr(data-label);font-family:var(--sans);font-size:12px;color:var(--ink);
+  mix-blend-mode:normal;text-transform:none;letter-spacing:0.02em;
+}
+@media (hover:none), (pointer:coarse){ .cursor{display:none;} }
+
+/* ============ PRELOADER ============ */
+.preloader{
+  position:fixed;inset:0;background:var(--ink);z-index:10000;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.preloader-word{
+  font-family:var(--serif);font-weight:400;font-size:clamp(2.5rem,9vw,7rem);
+  color:var(--cream);letter-spacing:0.02em;overflow:hidden;
+}
+.preloader-word span{display:inline-block;transform:translateY(110%);}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed;top:0;left:0;width:100%;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,4vw,56px);
+  background:rgba(30,26,21,0.4);backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(242,236,225,0.08);
+}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;color:var(--cream);letter-spacing:0.03em;}
+.nav-logo em{font-style:italic;color:var(--gold);}
+.nav-links{display:flex;gap:clamp(14px,2.5vw,34px);}
+.nav-links a{
+  color:var(--cream);font-size:0.85rem;position:relative;padding-bottom:3px;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);
+  transition:width .35s ease;
+}
+.nav-links a:hover::after{width:100%;}
+.nav-toggle{display:none;}
+@media (max-width:760px){
+  .nav-links{display:none;}
+}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;width:100%;min-height:100vh;background:var(--ink);
+  display:flex;flex-direction:column;
+  padding-top:90px;overflow:hidden;
+}
+.hero-inner{
+  flex:1;display:grid;grid-template-columns:1.15fr 0.85fr;align-items:stretch;
+  width:100%;
+}
+.hero-text{
+  padding:6vh clamp(24px,5vw,64px) 6vh clamp(24px,5vw,64px);
+  display:flex;flex-direction:column;justify-content:center;color:var(--cream);
+  position:relative;z-index:2;
+}
+.hero-kicker{font-size:0.95rem;color:var(--cream-dim);max-width:34ch;margin-bottom:22px;opacity:0.85;}
+.hero-word{
+  font-family:var(--serif);font-weight:400;font-size:clamp(3.2rem,9.5vw,8.4rem);
+  color:var(--cream);line-height:0.88;letter-spacing:-0.01em;
+}
+.hero-word .char{display:inline-block;overflow:hidden;}
+.hero-word .char span{display:inline-block;transform:translateY(115%);}
+.hero-sub{
+  font-family:var(--sans);font-size:0.78rem;letter-spacing:0.38em;color:var(--gold);
+  margin:18px 0 30px 4px;
+}
+.hero-desc{max-width:42ch;color:var(--cream-dim);font-size:1.02rem;line-height:1.6;margin-bottom:34px;}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+  border:1px solid rgba(242,236,225,0.35);border-radius:100px;
+  padding:14px 26px;font-size:0.9rem;color:var(--cream);
+  transition:background .35s ease,border-color .35s ease,color .35s ease;
+}
+.hero-cta:hover{background:var(--cream);color:var(--ink);border-color:var(--cream);}
+.hero-image{position:relative;overflow:hidden;}
+.hero-image img{
+  width:100%;height:100%;object-fit:cover;position:absolute;inset:0;
+  transform:scale(1.18);
+}
+.hero-image::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg, rgba(30,26,21,0.55), rgba(30,26,21,0) 34%);
+}
+.scroll-cue{
+  display:flex;align-items:center;gap:10px;color:var(--cream-dim);
+  font-size:0.75rem;letter-spacing:0.08em;padding:18px clamp(24px,5vw,64px) 26px;
+}
+.scroll-cue .line{width:34px;height:1px;background:var(--cream-dim);position:relative;overflow:hidden;}
+.scroll-cue .line::after{
+  content:'';position:absolute;left:-100%;top:0;bottom:0;width:100%;background:var(--gold);
+  animation:cueMove 1.8s ease-in-out infinite;
+}
+@keyframes cueMove{ 0%{left:-100%;} 50%{left:0%;} 100%{left:100%;} }
+
+@media (max-width:900px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-image{height:46vh;order:-1;}
+  .hero-text{padding-top:34px;}
+}
+
+/* ============ MARQUEE ============ */
+.marquee-strip{
+  background:var(--gold);color:var(--ink);padding:20px 0;overflow:hidden;
+  transform:rotate(-1.1deg);margin:-18px 0;position:relative;z-index:5;
+  border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+}
+.marquee-track{display:flex;width:max-content;white-space:nowrap;will-change:transform;}
+.marquee-track span{
+  font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,3vw,2.2rem);
+  padding:0 2.2vw;display:inline-flex;align-items:center;gap:2.2vw;
+}
+.marquee-track span::after{content:'✦';font-style:normal;font-size:0.6em;opacity:0.55;}
+
+/* ============ PHILOSOPHY ============ */
+.philosophy{
+  padding:min(18vh,180px) clamp(24px,8vw,140px);
+  background:var(--cream);
+}
+.philosophy p{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.6rem,4.2vw,3.1rem);line-height:1.32;max-width:20ch;
+}
+.philosophy .word{opacity:0.14;transition:opacity .1s;}
+.philosophy-foot{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:60px;gap:24px;flex-wrap:wrap;
+}
+.philosophy-foot span{font-size:0.85rem;color:var(--ink-soft);max-width:34ch;}
+
+/* ============ INDEX / SELECTED WORK ============ */
+.index-section{padding:40px clamp(24px,8vw,140px) 120px;background:var(--cream);position:relative;}
+.index-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;gap:20px;flex-wrap:wrap;border-bottom:1px solid rgba(30,26,21,0.15);padding-bottom:28px;}
+.index-head h2{font-size:clamp(2rem,4.5vw,3.4rem);}
+.index-head p{max-width:32ch;color:var(--ink-soft);font-size:0.95rem;}
+.index-row{
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:34px 0;border-bottom:1px solid rgba(30,26,21,0.15);
+  position:relative;cursor:pointer;
+}
+.index-row-left{display:flex;align-items:baseline;gap:26px;}
+.index-num{font-size:0.85rem;color:var(--ink-soft);font-variant-numeric:tabular-nums;}
+.index-name{font-family:var(--serif);font-size:clamp(1.8rem,5vw,3.6rem);transition:transform .45s cubic-bezier(.2,.8,.2,1),color .45s;}
+.index-row:hover .index-name{transform:translateX(14px);}
+.index-row-right{display:flex;align-items:center;gap:30px;color:var(--ink-soft);font-size:0.85rem;}
+.index-meta{text-align:right;display:none;}
+@media (min-width:640px){ .index-meta{display:block;} }
+.index-preview{
+  position:fixed;top:0;left:0;width:280px;height:190px;border-radius:4px;overflow:hidden;
+  pointer-events:none;z-index:400;opacity:0;transform:scale(0.92);
+}
+.index-preview img{width:100%;height:100%;object-fit:cover;}
+@media (max-width:760px){ .index-preview{display:none;} }
+
+/* ============ PROJECT SECTIONS ============ */
+.project{position:relative;background:var(--accent);color:var(--cream);}
+.project-head{
+  display:grid;grid-template-columns:1.1fr 0.9fr;min-height:92vh;
+}
+.project-head-text{
+  padding:16vh clamp(24px,6vw,90px) 8vh clamp(24px,6vw,90px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.project-index{font-size:0.85rem;color:var(--gold);margin-bottom:18px;}
+.project-title{
+  font-size:clamp(2.8rem,7.5vw,6rem);color:var(--cream);margin-bottom:26px;
+}
+.project-blurb{max-width:44ch;font-size:1.05rem;line-height:1.65;color:rgba(242,236,225,0.86);margin-bottom:38px;}
+.project-meta{display:flex;gap:clamp(24px,4vw,56px);flex-wrap:wrap;}
+.project-meta div{display:flex;flex-direction:column;gap:6px;}
+.project-meta dt{font-size:0.72rem;color:var(--gold);}
+.project-meta dd{font-size:0.98rem;color:var(--cream);}
+.project-head-image{position:relative;overflow:hidden;}
+.project-head-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+.project-head-image::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.28));}
+@media (max-width:900px){
+  .project-head{grid-template-columns:1fr;}
+  .project-head-image{height:52vh;}
+  .project-head-text{padding-top:64px;}
+}
+
+/* horizontal gallery (desktop pinned) */
+.h-gallery{position:relative;height:100vh;overflow:hidden;}
+.h-track{
+  display:flex;height:100%;align-items:center;gap:2.4vw;
+  padding:0 6vw;will-change:transform;
+}
+.h-card{position:relative;flex:0 0 auto;height:72vh;border-radius:3px;overflow:hidden;background:rgba(0,0,0,0.15);}
+.h-card img{height:100%;width:auto;display:block;object-fit:cover;}
+.h-card figcaption{
+  position:absolute;left:18px;bottom:16px;color:var(--cream);
+  font-size:0.8rem;background:rgba(20,16,12,0.42);padding:6px 12px;border-radius:100px;
+  backdrop-filter:blur(4px);
+}
+.h-card.end-card{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  background:var(--accent-deep);width:46vw;max-width:560px;padding:40px;
+}
+.h-card.end-card p{font-family:var(--serif);font-style:italic;font-size:clamp(1.4rem,2.6vw,2.2rem);color:var(--cream);}
+
+@media (max-width:900px){
+  .h-gallery{height:auto;padding:26px 0 50px;}
+  .h-track{
+    width:auto;overflow-x:auto;scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch;transform:none !important;
+  }
+  .h-card{height:58vh;scroll-snap-align:start;}
+  .h-card.end-card{width:70vw;}
+}
+
+/* ============ FOOTER ============ */
+.footer{
+  background:var(--ink);color:var(--cream);
+  padding:min(16vh,150px) clamp(24px,8vw,120px) 40px;
+  position:relative;
+}
+.footer-cta{max-width:16ch;font-size:clamp(2.4rem,7vw,5.6rem);margin-bottom:56px;}
+.footer-cta em{font-style:italic;color:var(--gold);}
+.footer-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:36px;padding-bottom:70px;border-bottom:1px solid rgba(242,236,225,0.14);
+}
+.footer-col h4{font-size:0.78rem;color:var(--gold);margin-bottom:14px;font-family:var(--sans);}
+.footer-col a,.footer-col p{display:block;font-size:0.98rem;color:var(--cream-dim);margin-bottom:8px;}
+.footer-col a:hover{color:var(--cream);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:28px;font-size:0.8rem;color:var(--cream-dim);flex-wrap:wrap;gap:12px;
+}
+.back-top{border:1px solid rgba(242,236,225,0.3);border-radius:100px;padding:10px 20px;font-size:0.8rem;}
+.back-top:hover{background:var(--cream);color:var(--ink);}
+
+/* reveal utility */
+.reveal{opacity:0;transform:translateY(36px);}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor" id="cursor"></div>
+
+<div class="preloader" id="preloader">
+  <div class="preloader-word" aria-hidden="true">
+    <span>E</span><span>R</span><span>A</span><span>Y</span><span>A</span>
+  </div>
+</div>
+
+<div class="index-preview" id="indexPreview"><img src="images/nirwana_living1.jpg" alt=""></div>
+
+<nav class="nav">
+  <a href="#top" class="nav-logo">ER<em>a</em>YA</a>
+  <div class="nav-links">
+    <a href="#work" data-cursor="view">Work</a>
+    <a href="#studio" data-cursor="view">Studio</a>
+    <a href="#contact" data-cursor="view">Contact</a>
+  </div>
+</nav>
+
+<main id="top">
+
+  <!-- ======================= HERO ======================= -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-kicker">Residential interior design, based in Pune.</p>
+        <h1 class="hero-word" id="heroWord">Eraya Interiors</h1>
+        <p class="hero-sub">Homes, considered room by room</p>
+        <p class="hero-desc">We plan, source, and style full homes — from the first floor sketch to the cushion on the sofa. Five finished homes, five very different households.</p>
+        <a href="#work" class="hero-cta" data-cursor="view">See the work</a>
+      </div>
+      <div class="hero-image">
+        <img src="images/nirwana_hero2.jpg" alt="Arched display niche with warm wood shelving and a potted plant">
+      </div>
+    </div>
+    <div class="scroll-cue"><span class="line"></span> Scroll to begin</div>
+  </header>
+
+  <!-- ======================= MARQUEE ======================= -->
+  <div class="marquee-strip">
+    <div class="marquee-track" id="marqueeTrack">
+      <span>Space Planning</span><span>Furniture Curation</span><span>Lighting Design</span><span>Custom Cabinetry</span><span>Styling &amp; Decor</span>
+      <span>Space Planning</span><span>Furniture Curation</span><span>Lighting Design</span><span>Custom Cabinetry</span><span>Styling &amp; Decor</span>
+    </div>
+  </div>
+
+  <!-- ======================= PHILOSOPHY ======================= -->
+  <section class="philosophy">
+    <p id="philText">A good interior isn't styled for a photograph. It's built for the version of you that lives there on an ordinary Tuesday.</p>
+    <div class="philosophy-foot">
+      <span>Every project starts the same way — with how a family actually moves through a day, not just how a room should look.</span>
+      <span>Pune, India</span>
+    </div>
+  </section>
+
+  <!-- ======================= INDEX / SELECTED WORK ======================= -->
+  <section class="index-section" id="work">
+    <div class="index-head">
+      <h2>Selected work</h2>
+      <p>Four homes, four households, four different ways of living well.</p>
+    </div>
+
+    <div class="index-list">
+      <a href="#nirwana" class="index-row" data-image="images/nirwana_hero2.jpg">
+        <div class="index-row-left">
+          <span class="index-num">01</span>
+          <span class="index-name">Nirwana Hook</span>
+        </div>
+        <div class="index-row-right">
+          <span class="index-meta">Nitish’s home, Pune</span>
+        </div>
+      </a>
+      <a href="#tatwamasi" class="index-row" data-image="images/tatwamasi_bed1.jpg">
+        <div class="index-row-left">
+          <span class="index-num">02</span>
+          <span class="index-name">Tatwamasi</span>
+        </div>
+        <div class="index-row-right">
+          <span class="index-meta">Girish’s home, Pune</span>
+        </div>
+      </a>
+      <a href="#serinity" class="index-row" data-image="images/serinity_hero2.jpg">
+        <div class="index-row-left">
+          <span class="index-num">03</span>
+          <span class="index-name">Serinity</span>
+        </div>
+        <div class="index-row-right">
+          <span class="index-meta">Teema’s home, Pune</span>
+        </div>
+      </a>
+      <a href="#palasimo" class="index-row" data-image="images/palasimo_hallway_gold.jpg">
+        <div class="index-row-left">
+          <span class="index-num">04</span>
+          <span class="index-name">Palasimo</span>
+        </div>
+        <div class="index-row-right">
+          <span class="index-meta">Full home renovation</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ======================= PROJECT: NIRWANA HOOK ======================= -->
+  <section class="project" id="nirwana" style="--accent:var(--rust);--accent-deep:var(--rust-deep)">
+    <div class="project-head">
+      <div class="project-head-text">
+        <span class="project-index">01 / 04</span>
+        <h2 class="project-title">Nirwana<br>Hook</h2>
+        <p class="project-blurb">A family home built around small rituals — a lit display arch for the everyday collectibles, a terrazzo-backed kitchen counter, and a kids' room drawn entirely in clouds.</p>
+        <dl class="project-meta">
+          <div><dt>Type</dt><dd>Residential Project</dd></div>
+          <div><dt>Client</dt><dd>Nitish</dd></div>
+          <div><dt>Location</dt><dd>Pune</dd></div>
+        </dl>
+      </div>
+      <div class="project-head-image">
+        <img src="images/nirwana_living1.jpg" alt="Golden-lit living room corner with a pleated pendant lamp">
+      </div>
+    </div>
+    <div class="h-gallery">
+      <div class="h-track">
+        <figure class="h-card"><img src="images/nirwana_hero1.jpg" alt="Kitchen counter with terrazzo splash-back"><figcaption>Kitchen</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_hero3.jpg" alt="Entry corridor with cane-textured door"><figcaption>Entry</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_living2.jpg" alt="Dining nook with curved wooden console"><figcaption>Living &amp; dining</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_living3.jpg" alt="Wall-mounted TV unit with backlit display shelves"><figcaption>Living &amp; dining</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_master3.jpg" alt="Master bedroom with a palm-leaf mural headboard wall"><figcaption>Master bedroom</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_guest2.jpg" alt="Window seat nook with an illustrated cushion"><figcaption>Guest bedroom</figcaption></figure>
+        <figure class="h-card"><img src="images/nirwana_kids2.jpg" alt="Kids room open shelving with books and toys"><figcaption>Kids' room</figcaption></figure>
+        <figure class="h-card end-card"><p>Nirwana Hook — a home for the everyday</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PROJECT: TATWAMASI ======================= -->
+  <section class="project" id="tatwamasi" style="--accent:var(--magenta);--accent-deep:var(--magenta-deep)">
+    <div class="project-head">
+      <div class="project-head-text">
+        <span class="project-index">02 / 04</span>
+        <h2 class="project-title">Tatwamasi</h2>
+        <p class="project-blurb">Named after the Sanskrit "thou art that," this home plays with contrast on purpose — lacquered blues, terracotta reds, and a hand-painted wall of feathers holding the whole palette together.</p>
+        <dl class="project-meta">
+          <div><dt>Type</dt><dd>Residential Project</dd></div>
+          <div><dt>Client</dt><dd>Girish</dd></div>
+          <div><dt>Location</dt><dd>Pune</dd></div>
+        </dl>
+      </div>
+      <div class="project-head-image">
+        <img src="images/tatwamasi_bed1.jpg" alt="Bedroom with a floral mural arch above a rust-coloured headboard">
+      </div>
+    </div>
+    <div class="h-gallery">
+      <div class="h-track">
+        <figure class="h-card"><img src="images/tatwamasi_hero1.jpg" alt="Backlit curio shelf with red lacquered figurines"><figcaption>Entry display</figcaption></figure>
+        <figure class="h-card"><img src="images/tatwamasi_hero3.jpg" alt="Blue built-in shelving with a fold-down piano"><figcaption>Study nook</figcaption></figure>
+        <figure class="h-card"><img src="images/tatwamasi_living1.jpg" alt="Reading corner beneath a hand-painted feather mural"><figcaption>Living room</figcaption></figure>
+        <figure class="h-card"><img src="images/tatwamasi_living3.jpg" alt="Family room with sliding glass and mirrored doors"><figcaption>Living room</figcaption></figure>
+        <figure class="h-card"><img src="images/tatwamasi_dining2.jpg" alt="Dining table beneath a brass bubble chandelier"><figcaption>Dining</figcaption></figure>
+        <figure class="h-card"><img src="images/tatwamasi_bed2.jpg" alt="Bedroom with a rippled plaster feature wall"><figcaption>Master bedroom</figcaption></figure>
+        <figure class="h-card end-card"><p>Tatwamasi — thou art that</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PROJECT: SERINITY ======================= -->
+  <section class="project" id="serinity" style="--accent:var(--royal);--accent-deep:var(--royal-deep)">
+    <div class="project-head">
+      <div class="project-head-text">
+        <span class="project-index">03 / 04</span>
+        <h2 class="project-title">Serinity</h2>
+        <p class="project-blurb">Calm, considered, and quietly detailed — bouclé textures, fluted stone consoles, and a botanical bedroom wall that changes character with the light.</p>
+        <dl class="project-meta">
+          <div><dt>Type</dt><dd>Residential Project</dd></div>
+          <div><dt>Client</dt><dd>Teema</dd></div>
+          <div><dt>Location</dt><dd>Pune</dd></div>
+        </dl>
+      </div>
+      <div class="project-head-image">
+        <img src="images/serinity_hero2.jpg" alt="Arched mirrored panel reflecting a living room television">
+      </div>
+    </div>
+    <div class="h-gallery">
+      <div class="h-track">
+        <figure class="h-card"><img src="images/serinity_hero1.jpg" alt="Fluted stone console with a sculptural black planter"><figcaption>Entry console</figcaption></figure>
+        <figure class="h-card"><img src="images/serinity_hero3.jpg" alt="Bedroom with a hand-painted bird and blossom mural"><figcaption>Bedroom</figcaption></figure>
+        <figure class="h-card"><img src="images/serinity_living1.jpg" alt="Bookshelf styled with framed art and open shelving"><figcaption>Study</figcaption></figure>
+        <figure class="h-card"><img src="images/serinity_living2.jpg" alt="Full-height wardrobe with dark timber inlay"><figcaption>Bedroom</figcaption></figure>
+        <figure class="h-card"><img src="images/serinity_living3.jpg" alt="Wall panelling detail with decorative moulding"><figcaption>Living room</figcaption></figure>
+        <figure class="h-card end-card"><p>Serinity — quiet, on purpose</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= PROJECT: PALASIMO ======================= -->
+  <section class="project" id="palasimo" style="--accent:var(--olive);--accent-deep:var(--olive-deep)">
+    <div class="project-head">
+      <div class="project-head-text">
+        <span class="project-index">04 / 04</span>
+        <h2 class="project-title">Palasimo</h2>
+        <p class="project-blurb">A blush-and-brass living space with a corridor of chandeliers — playful colour, used with a confident, grown-up hand.</p>
+        <dl class="project-meta">
+          <div><dt>Type</dt><dd>Residential Project</dd></div>
+          <div><dt>Scope</dt><dd>Full home</dd></div>
+        </dl>
+      </div>
+      <div class="project-head-image">
+        <img src="images/palasimo_hallway_gold.jpg" alt="Hallway with a brass chandelier and blush-pink dining chairs">
+      </div>
+    </div>
+    <div class="h-gallery">
+      <div class="h-track">
+        <figure class="h-card"><img src="images/palasimo_kitchen.jpg" alt="Sage green modular kitchen with brass handles"><figcaption>Kitchen</figcaption></figure>
+        <figure class="h-card"><img src="images/palasimo_tvunit.jpg" alt="Emerald green television console with gold trim"><figcaption>Living room</figcaption></figure>
+        <figure class="h-card"><img src="images/palasimo_living_pink.jpg" alt="Blush pink sectional sofa in a marble-floored living room"><figcaption>Living room</figcaption></figure>
+        <figure class="h-card"><img src="images/palasimo_doorway.jpg" alt="Timber-framed doorway with reeded glass panels"><figcaption>Corridor</figcaption></figure>
+        <figure class="h-card"><img src="images/palasimo_dining_mirror.jpg" alt="Round marble dining table beneath a crystal chandelier"><figcaption>Dining</figcaption></figure>
+        <figure class="h-card end-card"><p>Palasimo — colour, confidently</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= FOOTER / CONTACT ======================= -->
+  <footer class="footer" id="contact" style="--accent:var(--ink)">
+    <h2 class="footer-cta">Have a home <em>in mind?</em></h2>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <a href="mailto:hello@erayainteriors.in" data-cursor="view">hello@erayainteriors.in</a>
+        <a href="tel:+919800000000" data-cursor="view">+91 98000 00000</a>
+        <p>Placeholder contact details — swap in the studio's real ones.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <p id="studio">Pune, Maharashtra</p>
+        <p>Residential interiors, full turnkey</p>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <a href="#" data-cursor="view">Instagram</a>
+        <a href="#" data-cursor="view">Pinterest</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Eraya Interiors. All rights reserved.</span>
+      <a href="#top" class="back-top" data-cursor="view">Back to top</a>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var hasGSAP = typeof gsap !== 'undefined';
+
+/* ============ LENIS SMOOTH SCROLL ============ */
+var lenis;
+if (typeof Lenis !== 'undefined' && !reduceMotion) {
+  lenis = new Lenis({
+    duration: 1.1,
+    easing: function(t){ return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smoothWheel: true,
+    smoothTouch: false
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  if (hasGSAP) lenis.on('scroll', ScrollTrigger.update);
+}
+
+if (hasGSAP) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ============ PRELOADER ============ */
+  var tl = gsap.timeline({
+    onComplete: function(){
+      document.getElementById('preloader').style.pointerEvents = 'none';
+      ScrollTrigger.refresh();
+    }
+  });
+  tl.to('.preloader-word span', {
+    y: '0%', duration: 0.9, ease: 'power4.out', stagger: 0.045
+  })
+  .to('.preloader-word span', {
+    y: '-115%', duration: 0.6, ease: 'power3.in', stagger: 0.02, delay: 0.25
+  })
+  .to('#preloader', { yPercent: -100, duration: 0.8, ease: 'power4.inOut' }, '-=0.3')
+  .from('#heroWord', { opacity: 0, y: 30, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+  .from(['.hero-kicker','.hero-sub','.hero-desc','.hero-cta'], {
+    opacity: 0, y: 18, duration: 0.6, stagger: 0.08, ease: 'power3.out'
+  }, '-=0.5')
+  .from('.hero-image', { xPercent: 8, opacity: 0, duration: 1, ease: 'power3.out' }, '-=0.9')
+  .to('.hero-image img', { scale: 1, duration: 1.6, ease: 'power2.out' }, '-=0.9');
+
+  /* ============ NAV: hide preloader instantly if fonts/img slow ============ */
+  gsap.set('.hero-word', { opacity: 1 });
+
+  /* ============ HERO PARALLAX ON SCROLL ============ */
+  gsap.to('.hero-image img', {
+    yPercent: 12,
+    ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  /* ============ MARQUEE (infinite horizontal loop) ============ */
+  gsap.to('#marqueeTrack', {
+    xPercent: -50, duration: 22, ease: 'none', repeat: -1
+  });
+
+  /* ============ PHILOSOPHY WORD REVEAL ============ */
+  var philEl = document.getElementById('philText');
+  var words = philEl.textContent.trim().split(' ');
+  philEl.innerHTML = words.map(function(w){ return '<span class="word">' + w + ' </span>'; }).join('');
+  gsap.to('#philText .word', {
+    opacity: 1,
+    stagger: 0.06,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.philosophy',
+      start: 'top 75%',
+      end: 'top 15%',
+      scrub: true
+    }
+  });
+
+  /* ============ GENERIC REVEALS ============ */
+  gsap.utils.toArray('.philosophy-foot span, .index-head, .footer-cta, .footer-grid, .project-head-text > *').forEach(function(el){
+    gsap.fromTo(el, { opacity: 0, y: 28 }, {
+      opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  gsap.utils.toArray('.index-row').forEach(function(row, i){
+    gsap.fromTo(row, { opacity: 0, y: 24 }, {
+      opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: i * 0.05,
+      scrollTrigger: { trigger: row, start: 'top 92%' }
+    });
+  });
+
+  gsap.utils.toArray('.project-head-image').forEach(function(img){
+    gsap.fromTo(img, { clipPath: 'inset(0 0 100% 0)' }, {
+      clipPath: 'inset(0 0 0% 0)', duration: 1.1, ease: 'power4.inOut',
+      scrollTrigger: { trigger: img, start: 'top 85%' }
+    });
+  });
+
+  /* ============ HORIZONTAL PINNED GALLERIES (desktop only) ============ */
+  var mm = gsap.matchMedia();
+  mm.add('(min-width: 900px)', function(){
+    document.querySelectorAll('.h-gallery').forEach(function(gallery){
+      var track = gallery.querySelector('.h-track');
+      var getAmount = function(){ return Math.max(0, track.scrollWidth - window.innerWidth); };
+      gsap.to(track, {
+        x: function(){ return -getAmount(); },
+        ease: 'none',
+        scrollTrigger: {
+          trigger: gallery,
+          start: 'top top',
+          end: function(){ return '+=' + getAmount(); },
+          scrub: 0.6,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        }
+      });
+      gsap.utils.toArray(gallery.querySelectorAll('.h-card')).forEach(function(card, i){
+        gsap.from(card, {
+          opacity: 0.3, scale: 0.94, duration: 0.6, ease: 'power2.out',
+          scrollTrigger: { trigger: card, containerAnimation: gsap.getTweensOf(track)[0], start: 'left 90%' }
+        });
+      });
+    });
+    return function(){ /* cleanup handled by matchMedia revert */ };
+  });
+
+  /* ============ NAV background intensifies after hero ============ */
+  ScrollTrigger.create({
+    trigger: '.hero', start: 'bottom top',
+    onEnter: function(){ document.querySelector('.nav').style.background = 'rgba(30,26,21,0.72)'; },
+    onLeaveBack: function(){ document.querySelector('.nav').style.background = 'rgba(30,26,21,0.4)'; }
+  });
+}
+
+/* ============ CUSTOM CURSOR ============ */
+if (hasGSAP && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  var cursor = document.getElementById('cursor');
+  var xTo = gsap.quickTo(cursor, 'x', { duration: 0.45, ease: 'power3' });
+  var yTo = gsap.quickTo(cursor, 'y', { duration: 0.45, ease: 'power3' });
+  window.addEventListener('mousemove', function(e){ xTo(e.clientX); yTo(e.clientY); });
+
+  document.querySelectorAll('[data-cursor], .index-row, .h-card').forEach(function(el){
+    el.addEventListener('mouseenter', function(){
+      cursor.classList.add('big');
+      cursor.setAttribute('data-label', el.getAttribute('data-cursor') || 'View');
+    });
+    el.addEventListener('mouseleave', function(){ cursor.classList.remove('big'); });
+  });
+
+  /* index hover preview image, follows cursor */
+  var preview = document.getElementById('indexPreview');
+  var previewImg = preview.querySelector('img');
+  document.querySelectorAll('.index-row').forEach(function(row){
+    row.addEventListener('mousemove', function(e){
+      gsap.to(preview, { x: e.clientX + 26, y: e.clientY - 100, duration: 0.5, ease: 'power3' });
+    });
+    row.addEventListener('mouseenter', function(){
+      previewImg.setAttribute('src', row.getAttribute('data-image'));
+      gsap.to(preview, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
+    });
+    row.addEventListener('mouseleave', function(){
+      gsap.to(preview, { opacity: 0, scale: 0.92, duration: 0.3, ease: 'power3.in' });
+    });
+  });
+}
+</script>
+</body>
+</html>
